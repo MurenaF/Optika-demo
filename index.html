@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f3f6f1">
+  <meta name="description" content="Демонстрационная версия интерфейса обработки заявок. Все данные вымышлены.">
+  <title>Демо-версия · Оптика · Заявки</title>
+  <style>
+    :root{font-family:Inter,"Segoe UI",Arial,sans-serif;color:#30271f;background:#f7f2eb;font-synthesis:none;text-rendering:optimizeLegibility;--green:#24613d;--green-dark:#17452a;--green-soft:#eaf3ec;--brown:#8b5937;--brown-soft:#f5eee7;--line:#e7ddd0;--muted:#75695e;--white:#fffdf9}
+    *{box-sizing:border-box}body{margin:0;min-width:320px;background:linear-gradient(180deg,#efe4d6 0,#f8f4ee 300px,#f8f4ee 100%)}button,input,select,textarea{font:inherit}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #a7c7af;outline-offset:2px}
+    .page{max-width:1180px;margin:0 auto;padding:30px 28px 56px}.demo-banner{padding:27px 30px;border:1px solid #e6d6c3;border-radius:18px;background:linear-gradient(120deg,#fffdf9 0%,#f4eadc 100%);box-shadow:0 12px 32px #58391f0d}.banner-top{display:flex;align-items:center;gap:15px;color:var(--brown)}.banner-mark{display:grid;width:58px;height:58px;place-items:center;border:1px solid #e5cdb6;border-radius:17px;background:linear-gradient(145deg,#f8eee3,#ead5bd);color:#75472c;box-shadow:0 5px 12px #7345221c}.banner-mark svg{width:43px;height:43px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}.brand-name,.brand-caption{display:block}.brand-name{font-size:24.64px;font-weight:800;letter-spacing:-.035em;line-height:1.1}.brand-caption{margin-top:4px;color:#87715e;font-size:10px;font-weight:750;letter-spacing:.14em;text-transform:uppercase}.demo-banner h1{margin:14px 0 5px;color:var(--green-dark);font-size:clamp(34px,5vw,52px);line-height:1.05;letter-spacing:-.04em}.demo-banner small{display:block;max-width:750px;color:var(--muted);font-size:14px;line-height:1.6}
+    .intro{display:flex;justify-content:space-between;align-items:end;gap:16px;margin:28px 2px 15px}.intro h2{margin:0;color:#25382b;font-size:23px;letter-spacing:-.02em}.intro p{margin:5px 0 0;color:var(--muted);font-size:13px}.controls{display:flex;gap:9px;width:min(460px,100%)}.controls input,.controls select,.field,.detail textarea,.detail select{width:100%;min-height:44px;padding:10px 12px;border:1px solid var(--line);border-radius:9px;background:var(--white);color:inherit;font:inherit}.controls input:focus,.controls select:focus,.field:focus,.detail textarea:focus{border-color:#86a88e;outline:3px solid #e0eee2}
+    .carousel-shell{overflow:hidden;padding:0 1px}.carousel-window{overflow:hidden;border-radius:16px;touch-action:pan-y;user-select:none}.carousel-track{display:flex;transition:transform .35s cubic-bezier(.2,.7,.2,1);will-change:transform}.slide{flex:0 0 100%;min-width:0;padding:4px 3px 10px}.request-card{position:relative;display:flex;min-height:218px;flex-direction:column;justify-content:space-between;padding:25px 28px;border:1px solid #d6e2d4;border-radius:16px;background:linear-gradient(135deg,#f3f8ef 0%,#edf5e9 68%,#e7f0e2 100%);box-shadow:0 10px 28px #2036240b}.card-top,.card-bottom{display:flex;justify-content:space-between;align-items:center;gap:12px}.card-bottom{justify-content:flex-start;flex-wrap:wrap}.request-name{font-size:15px;font-weight:750}.request-id,.request-time{color:var(--muted);font-size:12px}.request-preview{max-width:780px;margin:24px 0;color:#29392e;font-size:clamp(20px,3vw,30px);font-weight:600;line-height:1.32;letter-spacing:-.025em}.category{margin-left:auto;color:var(--muted);font-size:13px}.request-time{white-space:nowrap}.status{display:inline-flex;align-items:center;gap:7px;padding:7px 11px;border:1px solid transparent;border-radius:999px;font-size:12px;font-weight:750;white-space:nowrap}.status:before{width:7px;height:7px;border-radius:50%;background:currentColor;content:""}.status-new{border-color:#f0d8c8;background:#fff2e9;color:#9b4c23}.status-work{border-color:#cddced;background:#edf4fc;color:#365f91}.status-wait{border-color:#ecdfb5;background:#fff8df;color:#856511}.status-done{border-color:#cce2d2;background:#eaf5ed;color:#286342}
+    .carousel-nav{display:flex;align-items:center;justify-content:center;gap:18px;padding:9px 0 5px}.arrow{display:grid;width:42px;height:42px;place-items:center;border:1px solid #d6e1d7;border-radius:12px;background:#fff;color:var(--green);font-size:23px;cursor:pointer;transition:background .15s,transform .15s}.arrow:hover:not(:disabled){transform:translateY(-1px);background:var(--green-soft)}.arrow:disabled{opacity:.42;cursor:not-allowed}.slide-counter{min-width:54px;color:#425548;font-size:13px;font-weight:700;text-align:center}.dots{display:flex;align-items:center;justify-content:center;gap:8px}.dot{width:9px;height:9px;padding:0;border:0;border-radius:50%;background:#c9d4ca;cursor:pointer;transition:all .18s}.dot[aria-current="true"]{width:24px;border-radius:8px;background:var(--green)}
+    .detail{margin-top:20px;padding:25px 28px;border:1px solid var(--line);border-radius:16px;background:var(--white);box-shadow:0 8px 24px #58391f08}.detail-head{display:flex;align-items:start;justify-content:space-between;gap:15px}.detail h2{margin:0 0 5px;color:var(--green-dark);font-size:22px}.detail h3{margin:0 0 9px;color:#35473a;font-size:13px}.meta{display:flex;align-items:center;justify-content:space-between;gap:8px;color:var(--muted);font-size:12px}.sample-tag{padding:6px 9px;border-radius:999px;background:var(--brown-soft);color:#754929;font-size:11px;font-weight:700;white-space:nowrap}.detail section{margin-top:20px}.message{padding:14px 16px;border:1px solid #e6ebe4;border-radius:10px;background:#f8faf7;color:#354238;font-size:14px;line-height:1.65}.detail textarea{min-height:104px;resize:vertical;line-height:1.5}.row{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field-label{display:block;margin-bottom:8px;color:#46564a;font-size:12px;font-weight:700}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:17px}.button{min-height:44px;padding:11px 16px;border:1px solid transparent;border-radius:9px;background:var(--green);color:#fff;font-weight:700;cursor:pointer;transition:background .15s,transform .15s}.button:hover{transform:translateY(-1px);background:var(--green-dark)}.button.secondary{border-color:#e4d8cb;background:#fff;color:#754929}.button.secondary:hover{background:var(--brown-soft)}.save-note{margin-top:11px;color:var(--muted);font-size:12px;line-height:1.5}.empty{padding:34px 12px;border:1px dashed #cbd9cc;border-radius:12px;background:#fff;color:var(--muted);text-align:center}.count{margin:0 2px;color:var(--muted);font-size:12px}
+    @media(max-width:650px){.page{padding:16px 14px 36px}.demo-banner{padding:22px 19px;border-radius:14px}.demo-banner small{font-size:13px}.intro{display:block;margin-top:22px}.intro h2{font-size:21px}.controls{width:100%;margin-top:13px}.controls input,.controls select{min-width:0}.request-card{min-height:200px;padding:20px 18px}.request-preview{margin:21px 0;font-size:22px}.carousel-nav{gap:12px}.arrow{width:40px;height:40px}.detail{padding:20px 17px;border-radius:13px}.detail h2{font-size:20px}.row{grid-template-columns:1fr;gap:13px}.actions{display:grid;grid-template-columns:1fr}.button{width:100%}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="demo-banner">
+      <div class="banner-top">
+        <span class="banner-mark" aria-hidden="true"><svg viewBox="0 0 48 32"><rect x="3" y="8" width="17" height="14" rx="5"/><rect x="28" y="8" width="17" height="14" rx="5"/><path d="M20 12c2-2 6-2 8 0M3 11 1 9m44 2 2-2"/></svg></span>
+        <span><span class="brand-name">Оптика</span><span class="brand-caption">Заявки клиентов</span></span>
+      </div>
+      <h1>Демо-версия</h1>
+      <small>Интерфейс обработки обращений на вымышленных примерах. Изменения хранятся только в этом браузере и не видны другим посетителям.</small>
+    </header>
+    <section aria-label="Демонстрационные заявки">
+      <div class="intro">
+        <div><h2>Заявки клиентов</h2><p>Листайте примеры и посмотрите, как устроена карточка обращения.</p></div>
+        <div class="controls">
+        <input id="search" type="search" placeholder="Поиск по заявкам" aria-label="Поиск по заявкам">
+        <select id="filter" aria-label="Фильтр по статусу">
+          <option value="all">Все статусы</option><option value="new">Новая</option><option value="work">В работе</option><option value="wait">Ожидает ответа</option><option value="done">Закрыта</option>
+        </select>
+      </div>
+      </div>
+      <div class="count" id="count"></div>
+      <div class="carousel-shell">
+        <div class="carousel-window" id="carousel-window" aria-label="Слайды с заявками">
+          <div class="carousel-track" id="request-list"></div>
+        </div>
+        <nav class="carousel-nav" aria-label="Навигация по заявкам">
+          <button class="arrow" id="previous" type="button" aria-label="Предыдущая заявка">‹</button>
+          <div class="dots" id="dots" aria-label="Выбрать заявку"></div>
+          <span class="slide-counter" id="slide-counter" aria-live="polite"></span>
+          <button class="arrow" id="next" type="button" aria-label="Следующая заявка">›</button>
+        </nav>
+      </div>
+    </section>
+    <section class="detail" id="detail" aria-live="polite" aria-label="Карточка выбранной заявки"></section>
+  </main>
+  <script>
+    const storageKey='optika-demo-requests-v1';
+    const examples=[
+      {id:'DEMO-101',name:'Клиент A',text:'Подскажите, как записаться на проверку зрения?',status:'new',category:'Запись на приём',answer:'Здравствуйте! Для записи сообщите, пожалуйста, удобный день и время.',comment:'',time:'Сегодня'},
+      {id:'DEMO-102',name:'Клиент B',text:'Можно ли узнать график работы салона в выходные?',status:'work',category:'График работы',answer:'Здравствуйте! Напишите, пожалуйста, какой салон вас интересует — уточним расписание.',comment:'',time:'Сегодня'},
+      {id:'DEMO-103',name:'Клиент C',text:'Какие данные нужны, чтобы уточнить стоимость линз?',status:'wait',category:'Цены и оплата',answer:'Здравствуйте! Пришлите название и параметры товара с упаковки — проверим информацию.',comment:'',time:'Вчера'},
+      {id:'DEMO-104',name:'Клиент D',text:'Подскажите, где находится ближайший салон?',status:'new',category:'Адреса салонов',answer:'Здравствуйте! Напишите ваш город или район, и мы подскажем адрес.',comment:'',time:'Вчера'},
+      {id:'DEMO-105',name:'Клиент E',text:'Можно ли отрегулировать оправу, купленную у вас?',status:'done',category:'Услуги',answer:'Здравствуйте! Возможность регулировки зависит от модели. Возьмите, пожалуйста, оправу с собой в салон.',comment:'',time:'Пн'},
+      {id:'DEMO-106',name:'Клиент F',text:'Как ухаживать за очками с покрытием?',status:'work',category:'Другое',answer:'Здравствуйте! Используйте чистую микрофибру и подходящее средство для оптики. Избегайте сухой грубой ткани.',comment:'',time:'Пн'},
+      {id:'DEMO-107',name:'Клиент G',text:'Подскажите, принимаете ли вы оплату картой?',status:'new',category:'Цены и оплата',answer:'Здравствуйте! Уточните, пожалуйста, какой салон вы планируете посетить — проверим доступные способы оплаты.',comment:'',time:'Вт'}
+    ];
+    const statusLabels={new:'Новая',work:'В работе',wait:'Ожидает ответа',done:'Закрыта'};
+    let requests;
+    try {
+      const saved=localStorage.getItem(storageKey);
+      requests=saved===null?examples:JSON.parse(saved);
+      if(!Array.isArray(requests))throw new Error('В локальном демо-хранилище ожидался список заявок.');
+    } catch(error) {
+      document.querySelector('#detail').textContent=`Не удалось загрузить демо-данные: ${error.message}`;
+      throw error;
+    }
+    let selectedId=requests[0]?.id||null;
+    let visibleRequests=[];
+    let currentIndex=0;
+    const escapeHtml=value=>String(value??'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+    function persist(){localStorage.setItem(storageKey,JSON.stringify(requests))}
+    function renderList(){
+      const query=document.querySelector('#search').value.trim().toLowerCase();
+      const filter=document.querySelector('#filter').value;
+      visibleRequests=requests.filter(item=>(filter==='all'||item.status===filter)&&(!query||`${item.name} ${item.text} ${item.category}`.toLowerCase().includes(query)));
+      document.querySelector('#count').textContent=`${visibleRequests.length} из ${requests.length} демонстрационных заявок`;
+      const selectedIndex=visibleRequests.findIndex(item=>item.id===selectedId);
+      currentIndex=selectedIndex<0?0:selectedIndex;
+      selectedId=visibleRequests[currentIndex]?.id||null;
+      const track=document.querySelector('#request-list');
+      const dots=document.querySelector('#dots');
+      const counter=document.querySelector('#slide-counter');
+      const previous=document.querySelector('#previous');
+      const next=document.querySelector('#next');
+      if(!visibleRequests.length){
+        track.innerHTML='<div class="empty slide">Нет заявок по выбранным условиям</div>';
+        dots.innerHTML='';
+        counter.textContent='0 из 0';
+        previous.disabled=true;next.disabled=true;
+        return;
+      }
+      track.innerHTML=visibleRequests.map((item,index)=>`<div class="slide" aria-hidden="${index!==currentIndex}"><article class="request-card"><div class="card-top"><span class="request-name">Заявка клиента</span><span class="request-id">${escapeHtml(item.id)}</span></div><p class="request-preview">${escapeHtml(item.text)}</p><div class="card-bottom"><span class="status status-${escapeHtml(item.status)}">${escapeHtml(statusLabels[item.status]||'Новая')}</span><span class="category">${escapeHtml(item.category)}</span><span class="request-time">${escapeHtml(item.time)}</span></div></article></div>`).join('');
+      dots.innerHTML=visibleRequests.map((item,index)=>`<button class="dot" type="button" data-index="${index}" aria-label="Заявка ${index+1} из ${visibleRequests.length}" aria-current="${index===currentIndex?'true':'false'}"></button>`).join('');
+      counter.textContent=`${currentIndex+1} из ${visibleRequests.length}`;
+      previous.disabled=currentIndex===0;next.disabled=currentIndex===visibleRequests.length-1;
+      track.style.transform=`translateX(-${currentIndex*100}%)`;
+      dots.querySelectorAll('.dot').forEach(dot=>dot.addEventListener('click',()=>showSlide(Number(dot.dataset.index))));
+    }
+    function renderDetail(){
+      const item=requests.find(entry=>entry.id===selectedId);
+      const detail=document.querySelector('#detail');
+      if(!item){detail.innerHTML='<div class="empty">Выберите демонстрационную заявку</div>';return}
+      detail.innerHTML=`<div class="detail-head"><div><h2>Заявка клиента</h2><div class="meta">Заявка № ${escapeHtml(item.id)} · ${escapeHtml(item.category)} · ${escapeHtml(item.time)}</div></div></div><section><h3>Сообщение клиента</h3><div class="message">${escapeHtml(item.text)}</div></section><section><div class="row"><label><span class="field-label">Статус</span><select id="status" class="field">${Object.entries(statusLabels).map(([key,label])=>`<option value="${key}" ${item.status===key?'selected':''}>${label}</option>`).join('')}</select></label><label><span class="field-label">Категория</span><select id="category" class="field">${['Запись на приём','График работы','Цены и оплата','Адреса салонов','Услуги','Товары и наличие','Другое'].map(category=>`<option ${item.category===category?'selected':''}>${escapeHtml(category)}</option>`).join('')}</select></label></div></section><section><h3>Черновик ответа</h3><textarea id="answer" aria-label="Черновик ответа">${escapeHtml(item.answer)}</textarea></section><section><h3>Внутренний комментарий демо</h3><textarea id="comment" aria-label="Демо-комментарий" placeholder="Только для этого браузера">${escapeHtml(item.comment)}</textarea></section><div class="actions"><button class="button" id="save">Сохранить в этом браузере</button><button class="button secondary" id="reset">Сбросить демо-примеры</button></div><div class="save-note" id="save-note">Изменения не отправляются и не видны другим посетителям.</div>`;
+      document.querySelector('#save').addEventListener('click',()=>{
+        item.status=document.querySelector('#status').value;
+        item.category=document.querySelector('#category').value;
+        item.answer=document.querySelector('#answer').value;
+        item.comment=document.querySelector('#comment').value;
+        persist();render();document.querySelector('#save-note').textContent='Сохранено локально в этом браузере.';
+      });
+      document.querySelector('#reset').addEventListener('click',()=>{
+        if(!window.confirm('Сбросить демо-примеры?'))return;
+        requests=examples.map(item=>({...item}));selectedId=requests[0]?.id||null;document.querySelector('#search').value='';document.querySelector('#filter').value='all';persist();render();
+      });
+    }
+    function showSlide(index){
+      if(index<0||index>=visibleRequests.length)return;
+      currentIndex=index;selectedId=visibleRequests[currentIndex].id;render();
+    }
+    function render(){renderList();renderDetail()}
+    document.querySelector('#search').addEventListener('input',renderList);
+    document.querySelector('#filter').addEventListener('change',renderList);
+    document.querySelector('#previous').addEventListener('click',()=>showSlide(currentIndex-1));
+    document.querySelector('#next').addEventListener('click',()=>showSlide(currentIndex+1));
+    document.addEventListener('keydown',event=>{
+      if(event.target.matches('input,textarea,select,[contenteditable="true"]'))return;
+      if(event.key==='ArrowLeft')showSlide(currentIndex-1);
+      if(event.key==='ArrowRight')showSlide(currentIndex+1);
+    });
+    let pointerStartX=null;
+    document.querySelector('#carousel-window').addEventListener('pointerdown',event=>{pointerStartX=event.clientX});
+    document.querySelector('#carousel-window').addEventListener('pointerup',event=>{
+      if(pointerStartX===null)return;
+      const distance=event.clientX-pointerStartX;
+      pointerStartX=null;
+      if(Math.abs(distance)>45)showSlide(currentIndex+(distance<0?1:-1));
+    });
+    document.querySelector('#carousel-window').addEventListener('pointercancel',()=>{pointerStartX=null});
+    if(localStorage.getItem(storageKey)===null)persist();
+    render();
+  </script>
+</body>
+</html>
